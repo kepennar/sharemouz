@@ -1,0 +1,70 @@
+buildscript {
+    repositories() {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE'
+		classpath "net.saliman:gradle-cobertura-plugin:2.2.2"
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'cobertura'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+jar {
+    baseName = 'sharemouz-reservations'
+    version =  '0.0.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	compile 'org.springframework.boot:spring-boot-starter-websocket'
+	compile 'org.springframework:spring-messaging'
+
+	compile 'javax.inject:javax.inject:1'      
+	compile 'javax.validation:validation-api:1.1.0.Final'
+	compile 'org.hibernate:hibernate-validator:5.1.1.Final'
+	compile 'com.google.guava:guava:17.0'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
+	testCompile 'org.assertj:assertj-core:1.6.0'
+	testCompile 'org.jsoup:jsoup:1.7.2'
+}
+
+test.testLogging.exceptionFormat = 'full'
+
+configurations {
+
+	// replaced with jcl-over-slf4j
+	all*.exclude group: 'commons-logging', module: 'commons-logging'
+	// replaced with log4j-over-slf4j
+	all*.exclude group: 'log4j', module: 'log4j'
+
+}
+
+cobertura {
+	coverageTestTasks {
+		project.tasks.withType(Test)
+	}
+}
+
+
+check.dependsOn project.tasks.withType(Test)
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
