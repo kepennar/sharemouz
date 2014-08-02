@@ -20,7 +20,7 @@ public class ReservationApplication {
 		app.addListeners(new ApplicationPidListener("app.pid"));
 		
 		// Check if the selected profile has been set as argument.
-		// if not the development profile will be added
+		// if not the production profile will be added
 		addDefaultProfile(app, source);
 		app.run(args);
 	}
