@@ -1,5 +1,6 @@
-package org.kepennar.sharemouz.backend.offer;
+package org.kepennar.sharemouz.backend.offer.repository;
 
+import org.kepennar.sharemouz.backend.offer.model.Offer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

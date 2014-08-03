@@ -21,10 +21,10 @@ public class JacksonConfig {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.setVisibilityChecker(
                 objectMapper.getSerializationConfig().getDefaultVisibilityChecker()
-                        .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
-                        .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
-                        .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
-                        .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+                        .withFieldVisibility(JsonAutoDetect.Visibility.NONE)
+                        .withGetterVisibility(JsonAutoDetect.Visibility.PROTECTED_AND_PUBLIC)
+                        .withSetterVisibility(JsonAutoDetect.Visibility.PROTECTED_AND_PUBLIC)
+                        .withCreatorVisibility(JsonAutoDetect.Visibility.PROTECTED_AND_PUBLIC));
         objectMapper.findAndRegisterModules();
         return objectMapper;
     }

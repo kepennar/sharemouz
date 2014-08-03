@@ -1,5 +1,6 @@
 package org.kepennar.sharemouz.backend;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.kepennar.sharemouz.backend.config.Constants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidListener;
@@ -7,11 +8,17 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+
+import java.io.File;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
+@EnableSpringDataWebSupport
 public class ReservationApplication {
+    public static File STORAGE_DIRECTORY = new File(SystemUtils.getUserHome(), "sharemouz");
+
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(ReservationApplication.class);

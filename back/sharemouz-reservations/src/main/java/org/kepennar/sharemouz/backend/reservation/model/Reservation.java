@@ -1,8 +1,8 @@
-package org.kepennar.sharemouz.backend.reservation;
+package org.kepennar.sharemouz.backend.reservation.model;
 
 import com.google.common.base.Objects;
 import org.kepennar.sharemouz.backend.model.AbstractDocument;
-import org.kepennar.sharemouz.backend.offer.Offer;
+import org.kepennar.sharemouz.backend.offer.model.Offer;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import javax.validation.constraints.NotNull;
