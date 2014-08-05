@@ -3,7 +3,7 @@ package org.kepennar.sharemouz.backend.offer.web;
 import org.kepennar.sharemouz.backend.ApiUrls;
 import org.kepennar.sharemouz.backend.offer.exception.OfferPhotoReadException;
 import org.kepennar.sharemouz.backend.offer.model.OfferPhoto;
-import org.kepennar.sharemouz.backend.offer.services.OffersService;
+import org.kepennar.sharemouz.backend.offer.services.OffersPhotoService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,11 +23,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping(value = ApiUrls.URL_OFFERS_OFFER_PHOTO)
 public class OfferPhotoController {
 
-    private final OffersService service;
+    private final OffersPhotoService service;
 
     @Inject
-    public OfferPhotoController(OffersService offersService) {
-        this.service = offersService;
+    public OfferPhotoController(OffersPhotoService offersPhotoService) {
+        this.service = offersPhotoService;
     }
 
     @RequestMapping(method = GET)

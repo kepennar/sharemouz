@@ -61,24 +61,6 @@ public class OffersServiceImpl implements OffersService {
         return Optional.of(repo.save(dbOffer));
     }
 
-    @Override
-    public OfferPhoto readOfferPhoto(String offerId) {
-        InputStream fileInputSteam = null;
-        try {
-            Offer offer = findById(offerId).get();
-            fileInputSteam = new FileInputStream(fileForPhoto(offerId));
-            byte[] data = IOUtils.toByteArray(fileInputSteam);
-            return new OfferPhoto(offerId, data, MediaType.parseMediaType(offer.getOfferPhotoMediaType()));
-        } catch (Exception e) {
-            throw new OfferPhotoReadException(offerId, e);
-        } finally {
-            IOUtils.closeQuietly(fileInputSteam);
-        }
-    }
-
-    private File fileForPhoto(String offerId) {
-        return new File(STORAGE_DIRECTORY, offerId);
-    }
 
 
 }
