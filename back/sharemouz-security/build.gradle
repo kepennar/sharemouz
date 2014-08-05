@@ -36,8 +36,11 @@ repositories {
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-security'
+	compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	compile 'org.springframework.boot:spring-boot-starter-security'
+	compile 'org.springframework.security:spring-security-openid:3.2.4.RELEASE'
 
-
+	compile 'javax.inject:javax.inject:1'
+	
     testCompile "junit:junit:4.11"
 }
