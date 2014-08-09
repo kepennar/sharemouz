@@ -1,19 +1,16 @@
 package org.kepennar.sharemouz.backend.config.mongo;
 
-import static org.kepennar.sharemouz.backend.config.RoleConverter.RoleToStringConverter;
-import static org.kepennar.sharemouz.backend.config.RoleConverter.StringToRoleConverter;
-
-import java.util.Arrays;
-
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.authentication.UserCredentials;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
 
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
+import java.util.Arrays;
+
+import static org.kepennar.sharemouz.backend.config.RoleConverter.RoleToStringConverter;
 
 @Configuration
 //@EnableMongoAuditing(auditorAwareRef = "auditorProvider")
@@ -56,7 +53,7 @@ public class MongoConfiguration extends AbstractMongoConfiguration {
     @Override
     public CustomConversions customConversions() {
         return new CustomConversions(Arrays.asList(
-               new StringToRoleConverter(), new RoleToStringConverter()));
+                new RoleToStringConverter()));
     }
 
 }

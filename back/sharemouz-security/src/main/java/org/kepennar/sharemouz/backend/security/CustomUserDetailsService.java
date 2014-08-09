@@ -1,9 +1,7 @@
 package org.kepennar.sharemouz.backend.security;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kepennar.sharemouz.backend.config.Role;
+import org.kepennar.sharemouz.backend.model.QUser;
 import org.kepennar.sharemouz.backend.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,14 +14,17 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-@Service
+@Service("userDetailsService")
 public class CustomUserDetailsService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
+    private final static String ROLE_PREFIX = "ROLE_";
+    private final UserRepository repo;
 
-	private final UserRepository repo;
-
-	@Inject
-	public CustomUserDetailsService(UserRepository userRepository) {
+    @Inject
+    public CustomUserDetailsService(UserRepository userRepository) {
 		this.repo = userRepository;
 	}
 
@@ -33,25 +34,42 @@ public class CustomUserDetailsService implements AuthenticationUserDetailsServic
 
 		List<OpenIDAttribute> attributes = token.getAttributes();
 
-		String email = attributes.stream()
-			.filter(a -> { return a.getName().equals("email"); })
-			.map(a -> { return a.getValues().get(0); })
-			.findFirst()
-			.get();
-		
-		List<Role> roles = repo.findByEmail(email).getRoles();
+        String email = getOpenIdAttribute(attributes, "email");
+
+        org.kepennar.sharemouz.backend.model.User dbUser = repo.findOne(QUser.user.email.eq(email));
+        if (dbUser == null) {
+            String firstname = getOpenIdAttribute(attributes, "firstname");
+            String lastname = getOpenIdAttribute(attributes, "lastname");
+
+            dbUser = new org.kepennar.sharemouz.backend.model.User();
+            dbUser.setEmail(email);
+            dbUser.setFirstname(firstname);
+            dbUser.setLastname(lastname);
+            dbUser.setRoles(Arrays.asList(Role.USER));
+
+            repo.save(dbUser);
+        }
+
+        List<Role> roles = dbUser.getRoles();
 
 		return new User(token.getName(), "", createAuthorityList(roles));
 	}
 	
 	
 	private List<GrantedAuthority> createAuthorityList(List<Role> roles) {
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(roles.size());
+        List<GrantedAuthority> authorities = new ArrayList<>(roles.size());
 
         for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.key()));
+            authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + role.key()));
         }
         return authorities;
 	}
 
+    private String getOpenIdAttribute(List<OpenIDAttribute> attributes, String key) {
+        return attributes.stream()
+                .filter(a -> a.getName().equals(key))
+                .map(a -> a.getValues().get(0))
+                .findFirst()
+                .get();
+    }
 }

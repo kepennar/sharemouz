@@ -1,26 +1,34 @@
 package org.kepennar.sharemouz.backend.model;
 
-import java.util.List;
-
 import org.kepennar.sharemouz.backend.config.Role;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
+
+@Document
 public class User {
 	
 	@Id
 	private String id;
-	
-	private String email;
-	
-	private String firstname;
-	private String lastname;
-	private String username;
-	
-	List<Role> roles;
-	
-	
-	public String getEmail() {
-		return email;
+
+    @Field("email")
+    private String email;
+
+    @Field("firstname")
+    private String firstname;
+    @Field("lastname")
+    private String lastname;
+    @Field("username")
+    private String username;
+
+    @Field("roles")
+    private List<Role> roles;
+
+
+    public String getEmail() {
+        return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
@@ -53,8 +61,9 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public List<Role> getRoles() {
-		return roles;
+
+    public List<Role> getRoles() {
+        return roles;
 	}
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;

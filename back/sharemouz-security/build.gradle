@@ -33,14 +33,56 @@ jar {
 repositories {
     mavenCentral()
 }
+configurations {
+    querydslapt
+}
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
-	compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
-	compile 'org.springframework.boot:spring-boot-starter-security'
-	compile 'org.springframework.security:spring-security-openid:3.2.4.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.security:spring-security-openid'
 
-	compile 'javax.inject:javax.inject:1'
-	
+
+    compile 'com.mysema.querydsl:querydsl-mongodb:3.4.2'
+    querydslapt 'com.mysema.querydsl:querydsl-apt:3.4.2'
+
+    compile 'javax.inject:javax.inject:1'
+
     testCompile "junit:junit:4.11"
+}
+
+
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/main/generated']
+        }
+    }
+}
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete sourceSets.generated.java.srcDirs
 }
