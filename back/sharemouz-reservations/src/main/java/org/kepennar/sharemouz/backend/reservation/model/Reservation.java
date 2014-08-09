@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import org.kepennar.sharemouz.backend.model.AbstractDocument;
 import org.kepennar.sharemouz.backend.offer.model.Offer;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -11,6 +12,7 @@ import java.time.Instant;
 /**
  * Created by kepennar on 02/08/14.
  */
+@Document
 public class Reservation extends AbstractDocument {
 
     @NotNull

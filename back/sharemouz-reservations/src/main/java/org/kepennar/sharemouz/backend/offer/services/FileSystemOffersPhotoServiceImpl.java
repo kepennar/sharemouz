@@ -1,6 +1,7 @@
 package org.kepennar.sharemouz.backend.offer.services;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.kepennar.sharemouz.backend.offer.exception.OfferPhotoReadException;
 import org.kepennar.sharemouz.backend.offer.exception.OfferPhotoWriteException;
 import org.kepennar.sharemouz.backend.offer.model.Offer;
@@ -9,21 +10,22 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.io.*;
 
-import static org.kepennar.sharemouz.backend.ReservationApplication.STORAGE_DIRECTORY;
-import static org.kepennar.sharemouz.backend.config.Constants.SPRING_PROFILE_DEVELOPMENT;
-import static org.kepennar.sharemouz.backend.config.Constants.SPRING_PROFILE_TEST;
-
+import static org.kepennar.sharemouz.backend.SpringProfiles.SPRING_PROFILE_DEVELOPMENT;
+import static org.kepennar.sharemouz.backend.SpringProfiles.SPRING_PROFILE_TEST;
 /**
  * Created by kepennar on 03/08/14.
  */
 @Profile({SPRING_PROFILE_DEVELOPMENT, SPRING_PROFILE_TEST})
 @Service
 public class FileSystemOffersPhotoServiceImpl implements OffersPhotoService {
+    public static File STORAGE_DIRECTORY = new File(SystemUtils.getUserHome(), "sharemouz");
 
     private final OffersService offersService;
 
+    @Inject
     public FileSystemOffersPhotoServiceImpl(OffersService offersService) {
         this.offersService = offersService;
     }

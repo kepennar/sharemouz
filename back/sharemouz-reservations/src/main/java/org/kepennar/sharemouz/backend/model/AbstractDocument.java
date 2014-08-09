@@ -1,6 +1,6 @@
 package org.kepennar.sharemouz.backend.model;
 
-import org.kepennar.sharemouz.backend.config.audit.AuditableUser;
+import org.kepennar.sharemouz.backend.security.model.User;
 import org.springframework.data.annotation.*;
 
 import java.time.Instant;
@@ -22,9 +22,9 @@ public class AbstractDocument {
     private Instant lastModified;
 
     @CreatedBy
-    private AuditableUser createdBy;
+    private User createdBy;
     @LastModifiedBy
-    private AuditableUser lastModifiedBy;
+    private User lastModifiedBy;
 
     public String getId() {
         return id;
@@ -58,19 +58,19 @@ public class AbstractDocument {
         this.lastModified = lastModified;
     }
 
-    public AuditableUser getCreatedBy() {
+    public User getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(AuditableUser createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
-    public AuditableUser getLastModifiedBy() {
+    public User getLastModifiedBy() {
         return lastModifiedBy;
     }
 
-    public void setLastModifiedBy(AuditableUser lastModifiedBy) {
+    public void setLastModifiedBy(User lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
     }
 

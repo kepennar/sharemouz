@@ -1,22 +1,13 @@
 package org.kepennar.sharemouz.backend.offer.services;
 
-import org.apache.commons.io.IOUtils;
-import org.kepennar.sharemouz.backend.offer.exception.OfferPhotoReadException;
 import org.kepennar.sharemouz.backend.offer.model.Offer;
-import org.kepennar.sharemouz.backend.offer.model.OfferPhoto;
 import org.kepennar.sharemouz.backend.offer.repository.OfferRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Optional;
-
-import static org.kepennar.sharemouz.backend.ReservationApplication.STORAGE_DIRECTORY;
 
 /**
  * Created by kepennar on 03/08/14.

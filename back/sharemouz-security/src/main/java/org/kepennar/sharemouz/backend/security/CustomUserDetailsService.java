@@ -1,8 +1,7 @@
 package org.kepennar.sharemouz.backend.security;
 
-import org.kepennar.sharemouz.backend.config.Role;
-import org.kepennar.sharemouz.backend.model.QUser;
-import org.kepennar.sharemouz.backend.repository.UserRepository;
+import org.kepennar.sharemouz.backend.security.model.QUser;
+import org.kepennar.sharemouz.backend.security.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
@@ -36,12 +35,12 @@ public class CustomUserDetailsService implements AuthenticationUserDetailsServic
 
         String email = getOpenIdAttribute(attributes, "email");
 
-        org.kepennar.sharemouz.backend.model.User dbUser = repo.findOne(QUser.user.email.eq(email));
+        org.kepennar.sharemouz.backend.security.model.User dbUser = repo.findOne(QUser.user.email.eq(email));
         if (dbUser == null) {
             String firstname = getOpenIdAttribute(attributes, "firstname");
             String lastname = getOpenIdAttribute(attributes, "lastname");
 
-            dbUser = new org.kepennar.sharemouz.backend.model.User();
+            dbUser = new org.kepennar.sharemouz.backend.security.model.User();
             dbUser.setEmail(email);
             dbUser.setFirstname(firstname);
             dbUser.setLastname(lastname);

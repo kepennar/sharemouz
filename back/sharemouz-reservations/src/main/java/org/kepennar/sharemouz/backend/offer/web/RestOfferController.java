@@ -43,9 +43,7 @@ public class RestOfferController {
     @RequestMapping(method = GET, value = ApiUrls.URL_OFFERS_OFFER)
     public HttpEntity<Resource<Offer>> getOffer(@PathVariable String id) {
         return service.findById(id)
-                .map(r -> {
-                    return new ResponseEntity<>(assembler.toResource(r), OK);
-                })
+                .map(r -> new ResponseEntity<>(assembler.toResource(r), OK))
                 .orElse(new ResponseEntity<>(NOT_FOUND));
     }
 
@@ -68,9 +66,7 @@ public class RestOfferController {
     @RequestMapping(method = POST)
     public HttpEntity<Resource<Offer>> updateOffer(@RequestBody Offer offer) {
         return service.update(offer)
-                .map(r -> {
-                    return new ResponseEntity<>(assembler.toResource(r), OK);
-                })
+                .map(r -> new ResponseEntity<>(assembler.toResource(r), OK))
                 .orElse(new ResponseEntity<>(NOT_FOUND));
     }
 
