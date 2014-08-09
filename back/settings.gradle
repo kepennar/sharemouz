@@ -1,0 +1,3 @@
+rootProject.name = 'sharemouz'
+
+include 'sharemouz-reservations', 'sharemouz-security', 'sharemouz-site'
