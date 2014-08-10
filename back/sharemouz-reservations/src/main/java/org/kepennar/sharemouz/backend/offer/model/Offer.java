@@ -4,12 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.kepennar.sharemouz.backend.model.AbstractDocument;
-import org.kepennar.sharemouz.backend.security.model.User;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.validation.constraints.NotNull;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
@@ -19,17 +15,15 @@ import static org.springframework.util.StringUtils.isEmpty;
 @Document
 public class Offer extends AbstractDocument {
 
-    @NotNull
-    @DBRef
-    private User user;
-
     @NotEmpty
     @Indexed
     private String name;
+
     @NotEmpty
     private String description;
 
     private String offerPhotoMediaType;
+
     @JsonIgnore
     private boolean offerPhotoImported;
 
@@ -37,7 +31,7 @@ public class Offer extends AbstractDocument {
     }
 
     public Offer(String id) {
-        this.setId(id);
+        super(id);
     }
 
     public Offer(String name, String description) {
@@ -55,30 +49,13 @@ public class Offer extends AbstractDocument {
     }
 
     public Offer(String id, String name, String description, String photoMediaType) {
-        this.setId(id);
+        this(id);
         this.name = name;
         this.description = description;
         this.offerPhotoMediaType = photoMediaType;
         if (!isEmpty(this.offerPhotoMediaType)) {
             this.offerPhotoImported = true;
         }
-    }
-
-    public Offer(Offer o) {
-        this(o.getId(), o.getName(), o.getDescription(), o.getOfferPhotoMediaType());
-        this.user = o.getUser();
-        this.setCreatedAt(o.getCreatedAt());
-        this.setLastModified(o.getLastModified());
-        this.setCreatedBy(o.getCreatedBy());
-        this.setLastModifiedBy(o.getLastModifiedBy());
-        this.setVersion(o.getVersion());
-    }
-
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getName() {

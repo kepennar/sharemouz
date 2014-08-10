@@ -43,13 +43,9 @@ public class OffersServiceImpl implements OffersService {
     }
 
     @Override
-    public Optional<Offer> update(Offer offer) {
-        Offer dbOffer = repo.findOne(offer.getId());
-        if (dbOffer == null) {
-            return Optional.empty();
-        }
-        dbOffer.updateProperties(offer);
-        return Optional.of(repo.save(dbOffer));
+    public Offer update(Offer offer, Offer updated) {
+        offer.updateProperties(updated);
+        return repo.save(offer);
     }
 
 

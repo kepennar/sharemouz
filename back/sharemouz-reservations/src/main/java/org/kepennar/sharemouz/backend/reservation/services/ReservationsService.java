@@ -17,7 +17,7 @@ public interface ReservationsService {
 
     void deleteById(String id);
 
-    Reservation create(Reservation reservation);
+    Reservation reserve(Offer offer, Reservation reservation);
 
     Page<Reservation> findByOffer(Offer offer, Pageable pageable);
 }

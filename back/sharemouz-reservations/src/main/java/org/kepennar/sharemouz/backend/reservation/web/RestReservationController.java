@@ -2,6 +2,7 @@ package org.kepennar.sharemouz.backend.reservation.web;
 
 import org.kepennar.sharemouz.backend.model.ValidationError;
 import org.kepennar.sharemouz.backend.offer.model.Offer;
+import org.kepennar.sharemouz.backend.reservation.hateoas.ReservationResource;
 import org.kepennar.sharemouz.backend.reservation.hateoas.ReservationResourceAssembler;
 import org.kepennar.sharemouz.backend.reservation.model.Reservation;
 import org.kepennar.sharemouz.backend.reservation.services.ReservationsService;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -41,41 +41,37 @@ public class RestReservationController {
     }
 
     @RequestMapping(method = GET, value = URL_RESERVATIONS_RESERVATION)
-    public HttpEntity<Resource<Reservation>> getReservation(@PathVariable String id) {
+    public HttpEntity<ReservationResource> getReservation(@PathVariable("id") String id) {
         return service.findById(id)
-                .map(r -> {
-                    return new ResponseEntity<>(assembler.toResource(r), OK);
-                })
+                .map(r -> new ResponseEntity<>(assembler.toResource(r), OK))
                 .orElse(new ResponseEntity<>(NOT_FOUND));
     }
 
 
     @RequestMapping(method = DELETE, value = URL_RESERVATIONS_RESERVATION)
-    public HttpEntity<Reservation> deleteReservation(@PathVariable String id) {
+    public HttpEntity deleteReservation(@PathVariable String id) {
         service.deleteById(id);
         return new ResponseEntity<>(OK);
     }
 
-    @RequestMapping(method = PUT)
-    public HttpEntity<Resource<Reservation>> createReservation(@RequestBody @Valid Reservation reservation, BindingResult bindingResult) {
+    @RequestMapping(method = PUT, value= URL_RESERVATIONS_RESERVE)
+    public HttpEntity<ReservationResource> reserve(
+            @PathVariable("offerId") Offer offer,
+            @RequestBody @Valid Reservation reservation, BindingResult bindingResult) {
+
+        if (offer == null) {
+            return new ResponseEntity(NOT_FOUND);
+        }
         if (bindingResult.hasErrors()) {
             return new ResponseEntity(ValidationError.of(bindingResult), BAD_REQUEST);
         }
-        Reservation createdReservation = service.create(reservation);
+
+        Reservation createdReservation = service.reserve(offer, reservation);
         return new ResponseEntity<>(assembler.toResource(createdReservation), OK);
     }
 
-    @RequestMapping(method = PUT, value = URL_RESERVATIONS_RESERVE)
-    public HttpEntity<Resource<Reservation>> reserve(@RequestBody @Valid Reservation reservation, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity(ValidationError.of(bindingResult), BAD_REQUEST);
-        }
-        Reservation reserved = service.create(reservation);
-        return new ResponseEntity<>(assembler.toResource(reserved), OK);
-    }
-
     @RequestMapping(method = GET, value = URL_RESERVATIONS_BY_OFFER, params = {"page", "size"})
-    public HttpEntity<PagedResources<Resource<Reservation>>> byOffer(@PathVariable String offerId, Pageable pageable, PagedResourcesAssembler<Reservation> pagedAssembler) {
+    public HttpEntity<PagedResources<ReservationResource>> getReservationsForOffer(@PathVariable String offerId, Pageable pageable, PagedResourcesAssembler<Reservation> pagedAssembler) {
         Offer offer = new Offer(offerId);
         Page<Reservation> reservations = service.findByOffer(offer, pageable);
 

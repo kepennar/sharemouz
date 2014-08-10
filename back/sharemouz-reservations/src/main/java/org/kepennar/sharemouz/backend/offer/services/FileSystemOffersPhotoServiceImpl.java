@@ -49,9 +49,10 @@ public class FileSystemOffersPhotoServiceImpl implements OffersPhotoService {
     public void writeOfferPhoto(String userId, MediaType ext, byte[] bytesForPhoto) {
 
         Offer offer = offersService.findById(userId).get();
-        offer.setOfferPhotoMediaType(ext.toString());
-        offer.setOfferPhotoImported(true);
-        offersService.update(offer);
+        Offer updatedOffer = new Offer();
+        updatedOffer.setOfferPhotoMediaType(ext.toString());
+        updatedOffer.setOfferPhotoImported(true);
+        offersService.update(offer, updatedOffer);
 
         ByteArrayInputStream byteArrayInputStream = null;
         FileOutputStream fileOutputStream = null;

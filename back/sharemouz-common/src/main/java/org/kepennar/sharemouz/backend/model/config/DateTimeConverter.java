@@ -1,4 +1,4 @@
-package org.kepennar.sharemouz.backend.site.config;
+package org.kepennar.sharemouz.backend.model.config;
 
 import com.fasterxml.jackson.datatype.jsr310.DecimalUtils;
 import org.springframework.core.convert.converter.Converter;

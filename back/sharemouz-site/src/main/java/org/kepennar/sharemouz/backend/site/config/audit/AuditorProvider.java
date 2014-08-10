@@ -1,7 +1,7 @@
 package org.kepennar.sharemouz.backend.site.config.audit;
 
-import org.kepennar.sharemouz.backend.security.model.QUser;
-import org.kepennar.sharemouz.backend.security.model.User;
+import org.kepennar.sharemouz.backend.model.QUser;
+import org.kepennar.sharemouz.backend.model.User;
 import org.kepennar.sharemouz.backend.security.repository.UserRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;

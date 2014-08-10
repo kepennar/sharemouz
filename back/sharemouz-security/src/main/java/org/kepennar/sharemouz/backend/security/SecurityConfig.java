@@ -2,13 +2,16 @@ package org.kepennar.sharemouz.backend.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import static org.kepennar.sharemouz.backend.security.Role.ADMIN;
-import static org.kepennar.sharemouz.backend.security.Role.USER;
+import static org.kepennar.sharemouz.backend.SpringProfiles.NOT_SPRING_PROFILE_TEST;
+import static org.kepennar.sharemouz.backend.model.Role.ADMIN;
+import static org.kepennar.sharemouz.backend.model.Role.USER;
 
+@Profile(NOT_SPRING_PROFILE_TEST)
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -42,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .attribute("lastname")
                     .type("http://axschema.org/namePerson/last")
                     .required(true)
+                .and()
                 .and()
                 .attributeExchange(".*myopenid.com.*")
                     .attribute("email")

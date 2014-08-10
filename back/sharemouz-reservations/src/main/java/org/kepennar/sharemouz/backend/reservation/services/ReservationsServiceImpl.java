@@ -38,7 +38,9 @@ public class ReservationsServiceImpl implements ReservationsService {
     }
 
     @Override
-    public Reservation create(Reservation reservation) {
+    public Reservation reserve(Offer offer, Reservation reservation) {
+
+        reservation.setOffer(offer);
         return repo.save(reservation);
     }
 

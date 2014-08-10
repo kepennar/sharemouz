@@ -19,6 +19,6 @@ public interface OffersService {
 
     Offer create(Offer offer);
 
-    Optional<Offer> update(Offer offer);
+    Offer update(Offer offer, Offer updated);
 
 }

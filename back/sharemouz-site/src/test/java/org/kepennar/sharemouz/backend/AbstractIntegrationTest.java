@@ -7,13 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.ResourceHttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
-import org.springframework.http.converter.xml.SourceHttpMessageConverter;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -23,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.inject.Inject;
-import javax.xml.transform.Source;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +30,7 @@ import static org.kepennar.sharemouz.backend.SpringProfiles.SPRING_PROFILE_TEST;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = SharemouzApplication.class)
-@ActiveProfiles(SPRING_PROFILE_TEST)
+@ActiveProfiles(value=SPRING_PROFILE_TEST, inheritProfiles=false)
 @IntegrationTest({"server.port=0", "management.port=0"})
 public abstract class AbstractIntegrationTest {
 
@@ -58,11 +52,6 @@ public abstract class AbstractIntegrationTest {
         jsonMessageConverter.setObjectMapper(objectMapper);
 
         List<HttpMessageConverter<?>> converters = Arrays.asList(
-                new ByteArrayHttpMessageConverter(),
-                new StringHttpMessageConverter(),
-                new ResourceHttpMessageConverter(),
-                new SourceHttpMessageConverter<Source>(),
-                new AllEncompassingFormHttpMessageConverter(),
                 jsonMessageConverter
         );
 

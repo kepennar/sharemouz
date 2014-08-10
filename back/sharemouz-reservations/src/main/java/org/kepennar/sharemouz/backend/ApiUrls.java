@@ -10,8 +10,11 @@ public class ApiUrls {
     // Reservations
     public static final String ROOT_URL_RESERVATIONS = "api/reservations";
     public static final String URL_RESERVATIONS_RESERVATION = "/{id}";
-    public static final String URL_RESERVATIONS_RESERVE = "/reserve";
-    public static final String URL_RESERVATIONS_BY_OFFER = "/offer/{offerId}";
+    public static final String URL_RESERVATIONS_RESERVE = "/{offerId}/reserve";
+    public static final String URL_RESERVATIONS_BY_OFFER = "/{offerId}/offers";
 
+    // Profils
+    public static final String ROOT_URL_PROFILES = "api/profiles";
+    public static final String URL_PROFILES_PROFILE = "/{id}";
 
 }

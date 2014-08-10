@@ -15,7 +15,6 @@ import java.time.Instant;
 @Document
 public class Reservation extends AbstractDocument {
 
-    @NotNull
     @DBRef
     private Offer offer;
 
@@ -27,6 +26,10 @@ public class Reservation extends AbstractDocument {
     public Reservation() {
     }
 
+    public Reservation(Instant begin, Instant end) {
+        this.begin = begin;
+        this.end = end;
+    }
     public Reservation(Offer offer, Instant begin, Instant end) {
         this.offer = offer;
         this.begin = begin;

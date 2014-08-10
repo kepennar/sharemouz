@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE'
         classpath "net.saliman:gradle-cobertura-plugin:2.2.2"
     }
 }
@@ -29,7 +29,8 @@ configurations {
 }
 
 dependencies {
-     compile project(':sharemouz-security')
+    compile project(':sharemouz-common')
+    compile project(':sharemouz-security')
 
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-mongodb'

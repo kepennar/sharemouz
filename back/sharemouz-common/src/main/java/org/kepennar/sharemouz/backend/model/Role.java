@@ -1,4 +1,4 @@
-package org.kepennar.sharemouz.backend.security;
+package org.kepennar.sharemouz.backend.model;
 
 public enum Role {
 

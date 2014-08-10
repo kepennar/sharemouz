@@ -1,6 +1,5 @@
 package org.kepennar.sharemouz.backend;
 
-import org.kepennar.sharemouz.backend.site.config.Constants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidListener;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -8,6 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+
+import static org.kepennar.sharemouz.backend.SpringProfiles.SPRING_PROFILE_PRODUCTION;
 
 /**
  * Created by kepennar on 09/08/14.
@@ -36,7 +37,7 @@ public class SharemouzApplication {
      */
     private static void addDefaultProfile(SpringApplication app, SimpleCommandLinePropertySource source) {
         if (!source.containsProperty("spring.profiles.active")) {
-            app.setAdditionalProfiles(Constants.SPRING_PROFILE_PRODUCTION);
+            app.setAdditionalProfiles(SPRING_PROFILE_PRODUCTION);
         }
     }
 

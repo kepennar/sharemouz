@@ -2,9 +2,9 @@ package org.kepennar.sharemouz.backend.site.config.mongo;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
-import org.kepennar.sharemouz.backend.security.config.RoleConverter;
-import org.kepennar.sharemouz.backend.site.config.DateTimeConverter.InstantToStringConverter;
-import org.kepennar.sharemouz.backend.site.config.DateTimeConverter.StringToInstantConverter;
+import org.kepennar.sharemouz.backend.model.config.DateTimeConverter.InstantToStringConverter;
+import org.kepennar.sharemouz.backend.model.config.DateTimeConverter.StringToInstantConverter;
+import org.kepennar.sharemouz.backend.model.config.RoleConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.authentication.UserCredentials;

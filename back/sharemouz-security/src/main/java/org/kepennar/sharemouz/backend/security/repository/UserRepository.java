@@ -1,6 +1,6 @@
 package org.kepennar.sharemouz.backend.security.repository;
 
-import org.kepennar.sharemouz.backend.security.model.User;
+import org.kepennar.sharemouz.backend.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
-package org.kepennar.sharemouz.backend.security.config;
+package org.kepennar.sharemouz.backend.model.config;
 
-import org.kepennar.sharemouz.backend.security.Role;
+import org.kepennar.sharemouz.backend.model.Role;
 import org.springframework.core.convert.converter.Converter;
 
 public class RoleConverter {

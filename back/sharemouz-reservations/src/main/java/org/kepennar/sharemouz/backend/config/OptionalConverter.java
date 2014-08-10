@@ -1,4 +1,4 @@
-package org.kepennar.sharemouz.backend.site.config;
+package org.kepennar.sharemouz.backend.config;
 
 import org.kepennar.sharemouz.backend.offer.model.Offer;
 import org.springframework.core.convert.converter.Converter;

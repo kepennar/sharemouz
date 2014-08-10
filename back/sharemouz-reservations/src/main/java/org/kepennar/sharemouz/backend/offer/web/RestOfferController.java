@@ -2,6 +2,7 @@ package org.kepennar.sharemouz.backend.offer.web;
 
 import org.kepennar.sharemouz.backend.ApiUrls;
 import org.kepennar.sharemouz.backend.model.ValidationError;
+import org.kepennar.sharemouz.backend.offer.hateoas.OfferResource;
 import org.kepennar.sharemouz.backend.offer.hateoas.OfferResourceAssembler;
 import org.kepennar.sharemouz.backend.offer.model.Offer;
 import org.kepennar.sharemouz.backend.offer.services.OffersService;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -41,7 +41,7 @@ public class RestOfferController {
 
     // GET by offer id
     @RequestMapping(method = GET, value = ApiUrls.URL_OFFERS_OFFER)
-    public HttpEntity<Resource<Offer>> getOffer(@PathVariable String id) {
+    public HttpEntity<OfferResource> getOffer(@PathVariable String id) {
         return service.findById(id)
                 .map(r -> new ResponseEntity<>(assembler.toResource(r), OK))
                 .orElse(new ResponseEntity<>(NOT_FOUND));
@@ -49,7 +49,7 @@ public class RestOfferController {
 
     //GET offers page
     @RequestMapping(method = GET, params = {"page", "size"})
-    public HttpEntity<PagedResources<Resource<Offer>>> getOfferPaginated(Pageable pageable, PagedResourcesAssembler<Offer> pagedAssembler) {
+    public HttpEntity<PagedResources<OfferResource>> getOfferPaginated(Pageable pageable, PagedResourcesAssembler<Offer> pagedAssembler) {
         Page<Offer> orders = service.find(pageable);
         return new ResponseEntity<>(pagedAssembler.toResource(orders, assembler), OK);
     }
@@ -63,16 +63,18 @@ public class RestOfferController {
     }
 
     // POST: Update an offer
-    @RequestMapping(method = POST)
-    public HttpEntity<Resource<Offer>> updateOffer(@RequestBody Offer offer) {
-        return service.update(offer)
-                .map(r -> new ResponseEntity<>(assembler.toResource(r), OK))
-                .orElse(new ResponseEntity<>(NOT_FOUND));
+    @RequestMapping(method = POST, value = ApiUrls.URL_OFFERS_OFFER)
+    public HttpEntity<OfferResource> updateOffer(@PathVariable("id") Offer offer, @RequestBody Offer offerUpdated) {
+        if (offer == null) {
+            return new ResponseEntity(NOT_FOUND);
+        }
+        Offer savedOffer = service.update(offer, offerUpdated);
+        return new ResponseEntity<>(assembler.toResource(savedOffer), OK);
     }
 
     // PUT: create an offer
     @RequestMapping(method = PUT)
-    public HttpEntity<Resource<Offer>> createOffer(@RequestBody @Valid Offer offer, BindingResult bindingResult) {
+    public HttpEntity<OfferResource> createOffer(@RequestBody @Valid Offer offer, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity(ValidationError.of(bindingResult), BAD_REQUEST);
         }

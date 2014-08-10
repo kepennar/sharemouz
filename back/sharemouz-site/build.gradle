@@ -39,6 +39,8 @@ project.gradle.projectsEvaluated {
 }
 
 dependencies {
+
+    compile project(':sharemouz-common')
     compile project(':sharemouz-security')
     compile project(':sharemouz-reservations')
 
