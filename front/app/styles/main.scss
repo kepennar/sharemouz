@@ -35,6 +35,10 @@ $menu-hover-txt-color:        lighten($menu-txt-color, 20%);
 $txt-shadow-color:            rgba(136,136,136,.5);
 $box-shadow-color:            rgba(0,0,0,.5);
 
+$post-hover-background-color: #ECFFEA;
+
+$slide-panel-width:			75%;
+
 body {
   color: $txt-color;
   background-color: $background-color;
@@ -160,7 +164,13 @@ h6, .h6 {
  */
 
 .shm-post {
+  padding: 5px;
   margin-bottom: 60px;
+  @include border-radius(4px);
+}
+.shm-post:hover {
+  cursor: pointer;
+  background-color: $post-hover-background-color;
 }
 .shm-post-meta {
   margin-bottom: 20px;
@@ -168,6 +178,38 @@ h6, .h6 {
 }
 .post-separator {
 	border-top: 2px #eee solid;
+}
+
+/*
+ * Side panel
+ */
+.shm-slide-panel {
+	position:fixed;
+	top: 0;
+	height: 100%;
+	width: $slide-panel-width;
+	@include transition(all, 0.25s, ease-out);
+	@include box-shadow(-2px, 0px, 4px,rgba(182, 182, 182, 0.75));  
+}
+.shm-slide-panel-right {	
+    right: -$slide-panel-width;
+}
+.shm-slide-panel-right.active {
+	right: 0;
+}
+.shm-slide-panel-left {	
+    left: -$slide-panel-width;  
+}
+.shm-slide-panel-left.active {
+	left: 0;    
+}
+.shm-slide-panel .navbar {
+	font-size: 18px;
+	padding-top: 50px;
+	border-bottom: 1px solid #999;
+}
+.detail-description {
+	text-shadow: 0 1px 1px rgba(136, 136, 136, 0.5);
 }
 
 
