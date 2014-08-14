@@ -13,12 +13,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE'
         classpath "net.saliman:gradle-cobertura-plugin:2.2.2"
     }
 }
 
-apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'cobertura'
 apply plugin: 'idea'
@@ -56,4 +55,3 @@ dependencies {
     testCompile 'org.assertj:assertj-core:1.6.0'
     testCompile 'org.jsoup:jsoup:1.7.2'
 }
-

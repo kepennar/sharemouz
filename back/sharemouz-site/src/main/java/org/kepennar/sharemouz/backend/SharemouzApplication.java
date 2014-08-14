@@ -35,7 +35,7 @@ public class SharemouzApplication {
     /**
      * Set a default profile if it has not been set
      */
-    private static void addDefaultProfile(SpringApplication app, SimpleCommandLinePropertySource source) {
+    private static void addDefaultProfile( SpringApplication app, SimpleCommandLinePropertySource source) {
         if (!source.containsProperty("spring.profiles.active")) {
             app.setAdditionalProfiles(SPRING_PROFILE_PRODUCTION);
         }

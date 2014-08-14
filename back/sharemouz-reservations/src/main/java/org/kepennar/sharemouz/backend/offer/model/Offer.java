@@ -49,13 +49,9 @@ public class Offer extends AbstractDocument {
     }
 
     public Offer(String id, String name, String description, String photoMediaType) {
-        this(id);
-        this.name = name;
-        this.description = description;
-        this.offerPhotoMediaType = photoMediaType;
-        if (!isEmpty(this.offerPhotoMediaType)) {
-            this.offerPhotoImported = true;
-        }
+        this(name, description, photoMediaType);
+        this.setId(id);
+
     }
 
     public String getName() {

@@ -15,11 +15,11 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-public class MainController {
+public class SecurityController {
     private final AuditRepository repo;
 
     @Inject
-    public MainController(AuditRepository auditRepository) {
+    public SecurityController(AuditRepository auditRepository) {
         this.repo= auditRepository;
     }
 
@@ -43,9 +43,7 @@ public class MainController {
     }
 
     @RequestMapping(method = GET, value = "admin/audits")
-    public
-    @ResponseBody
-    HttpEntity<List<MongoAuditEvent>> getEvents() {
+    public @ResponseBody HttpEntity<List<MongoAuditEvent>> getEvents() {
         return new ResponseEntity<>(repo.findAll(), OK);
     }
 }

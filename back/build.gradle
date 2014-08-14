@@ -4,9 +4,11 @@ def javaProjects = [ project(':sharemouz-common'), project(':sharemouz-security'
 buildscript {
     repositories() {
         mavenCentral()
+        maven { url 'http://repos.zeroturnaround.com/nexus/content/groups/zt-public/' }
     }
     dependencies {
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE'
+        classpath 'org.zeroturnaround:gradle-jrebel-plugin:1.1.2'
         classpath "net.saliman:gradle-cobertura-plugin:2.2.2"
     }
 }
@@ -15,6 +17,8 @@ wrapper.gradleVersion = '1.12'
 
 
 configure(allprojects) {
+    apply plugin: 'java'
+    apply plugin: 'rebel'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 
@@ -42,7 +46,7 @@ configure(javaProjects) {
 
     dependencies {
         compile 'org.slf4j:slf4j-api'
-
+        compile 'com.google.code.findbugs:jsr305:3.0.0'
 
         testCompile 'junit:junit'
         testCompile 'org.assertj:assertj-core:1.6.0'
