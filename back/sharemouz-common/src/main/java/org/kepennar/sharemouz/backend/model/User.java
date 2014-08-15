@@ -13,6 +13,9 @@ public class User extends AbstractDocument {
     private String lastname;
     private String username;
 
+    private Integer nbOffers;
+    private Integer nbReservations;
+
     private List<Role> roles;
 
     public User() { }
@@ -58,4 +61,20 @@ public class User extends AbstractDocument {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+
+    public Integer getNbOffers() {
+        return nbOffers;
+    }
+
+    public void setNbOffers(Integer nbOffers) {
+        this.nbOffers = nbOffers;
+    }
+
+    public Integer getNbReservations() {
+        return nbReservations;
+    }
+
+    public void setNbReservations(Integer nbReservations) {
+        this.nbReservations = nbReservations;
+    }
 }

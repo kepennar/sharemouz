@@ -62,8 +62,8 @@ public class RestOfferController {
         return new ResponseEntity<>(OK);
     }
 
-    // POST: Update an offer
-    @RequestMapping(method = POST, value = ApiUrls.URL_OFFERS_OFFER)
+    // PUT: Update an offer
+    @RequestMapping(method = PUT, value = ApiUrls.URL_OFFERS_OFFER)
     public HttpEntity<OfferResource> updateOffer(@PathVariable("id") Offer offer, @RequestBody Offer offerUpdated) {
         if (offer == null) {
             return new ResponseEntity(NOT_FOUND);
@@ -72,8 +72,8 @@ public class RestOfferController {
         return new ResponseEntity<>(assembler.toResource(savedOffer), OK);
     }
 
-    // PUT: create an offer
-    @RequestMapping(method = PUT)
+    // POST: create an offer
+    @RequestMapping(method = POST)
     public HttpEntity<OfferResource> createOffer(@RequestBody @Valid Offer offer, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity(ValidationError.of(bindingResult), BAD_REQUEST);

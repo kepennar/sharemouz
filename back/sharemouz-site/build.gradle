@@ -47,6 +47,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
 
+    compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
     compile 'javax.inject:javax.inject:1'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'

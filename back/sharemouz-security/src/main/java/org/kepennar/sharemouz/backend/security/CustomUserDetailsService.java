@@ -40,24 +40,18 @@ public class CustomUserDetailsService implements AuthenticationUserDetailsServic
         if (dbUser == null) {
             String firstname = getOpenIdAttribute(attributes, "firstname");
             String lastname = getOpenIdAttribute(attributes, "lastname");
+
             String username = token.getName();
 
-            dbUser = new org.kepennar.sharemouz.backend.model.User();
-            dbUser.setEmail(email);
-            dbUser.setUsername(username);
-            dbUser.setFirstname(firstname);
-            dbUser.setLastname(lastname);
-            dbUser.setRoles(Arrays.asList(Role.USER));
-
-            repo.save(dbUser);
+            dbUser = createUser(email, firstname, lastname, username);
         }
 
         List<Role> roles = dbUser.getRoles();
 
 		return new User(token.getName(), "", createAuthorityList(roles));
 	}
-	
-	
+
+
 	private List<GrantedAuthority> createAuthorityList(List<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>(roles.size());
 
@@ -73,5 +67,19 @@ public class CustomUserDetailsService implements AuthenticationUserDetailsServic
                 .map(a -> a.getValues().get(0))
                 .findFirst()
                 .get();
+    }
+
+    private org.kepennar.sharemouz.backend.model.User createUser(String email, String firstname, String lastname, String username) {
+        org.kepennar.sharemouz.backend.model.User user = new org.kepennar.sharemouz.backend.model.User();
+        user.setEmail(email);
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
+        user.setUsername(username);
+        user.setNbOffers(0);
+        user.setNbReservations(0);
+
+        user.setRoles(Arrays.asList(Role.USER));
+
+        return repo.save(user);
     }
 }
