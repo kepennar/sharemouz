@@ -1,0 +1,109 @@
+buildscript {
+    repositories() {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE'
+        classpath "net.saliman:gradle-cobertura-plugin:2.2.2"
+    }
+}
+
+apply plugin: 'spring-boot'
+apply plugin: 'cobertura'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+jar {
+    baseName = 'sharemouz-common'
+    version = '0.0.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    querydslapt
+}
+
+dependencies {
+
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    compile 'javax.inject:javax.inject:1'
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile 'org.hibernate:hibernate-validator:5.1.1.Final'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+    compile 'com.google.guava:guava:17.0'
+    compile 'org.apache.commons:commons-io:1.3.2'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+
+    compile 'com.mysema.querydsl:querydsl-mongodb:3.4.2'
+    querydslapt "com.mysema.querydsl:querydsl-apt:3.4.2"
+
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
+    testCompile 'org.assertj:assertj-core:1.6.0'
+    testCompile 'org.jsoup:jsoup:1.7.2'
+}
+
+test.testLogging.exceptionFormat = 'full'
+
+configurations {
+
+    // replaced with jcl-over-slf4j
+    all*.exclude group: 'commons-logging', module: 'commons-logging'
+    // replaced with log4j-over-slf4j
+    all*.exclude group: 'log4j', module: 'log4j'
+
+}
+
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/main/generated']
+        }
+    }
+}
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+ 
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+ 
+clean {
+    delete sourceSets.generated.java.srcDirs
+}
+
+cobertura {
+    coverageTestTasks {
+        project.tasks.withType(Test)
+    }
+}
+
+
+check.dependsOn project.tasks.withType(Test)
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}

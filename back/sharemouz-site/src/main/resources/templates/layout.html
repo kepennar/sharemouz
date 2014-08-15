@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+        >
+<head>
+  <title>Layout</title>
+  <meta id="Viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.png}"/>
+  <link rel="stylesheet" type="text/css" href="" th:href="@{/styles/main.css}" />
+</head>
+<body>
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+ <header class="navbar navbar-static-top affix" role="banner" data-spy="affix">
+      <div class="container">
+        <nav class="shm-nav">
+          <a class="shm-nav-item active" href="#">Home</a>
+        </nav>
+        <nav class="pull-right" sec:authorize="isFullyAuthenticated()">
+          [<a id='authentication' href="signout" th:href="@{/signout}">Sign out</a>]
+        </nav>
+      </div>
+    </header>
+
+  <div class="container-fluid main-container">
+    <div class="row">
+
+        <div class="col-sm-2 shm-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>Votre recherche</h4>
+                <ul class="list-unstyled">
+                    <li>Un critère</li>
+                    <li>Un autre critère</li>
+                    <li>Un dernier critère</li>
+                </ul>
+            </div>
+    
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+    e.src='//www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','UA-XXXXX-X');ga('send','pageview');
+</script>
+
+</body>
+</html>
