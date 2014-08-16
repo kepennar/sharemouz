@@ -8,6 +8,11 @@
 *.war
 *.ear
 
+# IDE
+*.iml
+*.iws
+*.ipr
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 back/sharemouz-reservations/.gradle/
@@ -18,4 +23,12 @@ back/sharemouz-reservations/.gradle/
 back/sharemouz-security/.classpath
 back/sharemouz-security/.project
 back/sharemouz-reservations/build/
+**/src/main/generated/
+app.id
+
+rebel.xml
+
+.jruby
+.sass-cache
+bower_components
 
