@@ -1,0 +1,20 @@
+<div class="col-sm-2 shm-sidebar">
+    <div class="sidebar-module sidebar-module-inset">
+        <h4>{{profil.firstname}} {{profil.lastname}}</h4>
+        <ul class="list-unstyled">
+            <li><a href ng-click="profilOffers()">Vos offres <span class="badge pull-right">{{profil.nbOffers}}</span></a></li>
+            <li><a href ng-click="profilReservations()">Vos réservations <span class="badge pull-right">{{profil.nbReservations}}</span></a></li>
+        </ul>
+    </div>
+</div>
+<div class="col-sm-10 shm-main" ng-repeat="item in items">
+    <div class="shm-post">
+        <h2 >{{item.name}}</h2>
+        <p class="shm-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+        <p class="shm-post-photo"><img src="http://placehold.it/350x150" /></p>
+        <p>{{item.description}}</p>
+    </div><!-- /.shm-post -->
+</div>
+<div class="col-sm-10 shm-main" ng-show="!items.length">
+    Rien à afficher!!!
+</div>

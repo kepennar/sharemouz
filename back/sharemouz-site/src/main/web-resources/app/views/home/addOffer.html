@@ -1,0 +1,36 @@
+<div class="modal-header">
+	<h3 class="modal-title">Ajouter une offre</h3>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<form name="offerForm" class="form-horizontal" role="form">
+
+			<div class="form-group has-feedback"
+				ng-class="{'has-success': offerForm.nameInput.$valid && offerForm.nameInput.$dirty,
+                    'has-error': offerForm.nameInput.$invalid}" >
+				<label class="col-sm-2 control-label" for="nameInput">Name</label>
+				<div class="col-sm-10">
+					<input id="nameInput" name="nameInput" ng-model="newOffer.name" type="text" placeholder="Name" class="form-control" required>
+					<span class="glyphicon form-control-feedback" 
+						ng-class="{'glyphicon-ok': offerForm.nameInput.$valid, 'glyphicon-remove': offerForm.nameInput.$invalid}" ></span>
+				</div>
+			</div>
+
+
+			<div class="form-group has-success has-feedback"
+				ng-class="{'has-success': offerForm.description.$valid && offerForm.description.$dirty,
+                    'has-error': offerForm.description.$invalid}" >
+				<label class="col-sm-2 control-label" for="description">Url</label>
+				<div class="col-sm-10">
+					<input id="description" name="description"  ng-model="newOffer.description" type="text" placeholder="Description" class="form-control" required>
+					<span class="glyphicon form-control-feedback" 
+						ng-class="{'glyphicon-ok': offerForm.description.$valid, 'glyphicon-remove': offerForm.description.$invalid}" ></span>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>	
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()" ng-disabled="offerForm.$invalid" >OK</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
