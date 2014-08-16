@@ -1,5 +1,6 @@
 package org.kepennar.sharemouz.backend.offer.services;
 
+import org.kepennar.sharemouz.backend.model.User;
 import org.kepennar.sharemouz.backend.offer.events.OfferEvent;
 import org.kepennar.sharemouz.backend.offer.model.Offer;
 import org.kepennar.sharemouz.backend.offer.repository.OfferRepository;
@@ -48,6 +49,11 @@ public class OffersService implements ApplicationEventPublisherAware {
     public Offer update(Offer offer, Offer updated) {
         offer.updateProperties(updated);
         return repo.save(offer);
+    }
+
+    public Page<Offer> getOffersForProfil(String profilId, Pageable pageable) {
+        User reqUser = new User(profilId);
+        return repo.findByProfilId(profilId, pageable);
     }
 
     @Override

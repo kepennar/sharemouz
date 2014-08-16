@@ -2,6 +2,7 @@ package org.kepennar.sharemouz.backend.profile.services;
 
 import org.kepennar.sharemouz.backend.model.User;
 import org.kepennar.sharemouz.backend.offer.events.OfferEvent;
+import org.kepennar.sharemouz.backend.security.AuthenticatedUserProvider;
 import org.kepennar.sharemouz.backend.security.repository.UserRepository;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -21,10 +22,17 @@ public class ProfilService {
     private final UserRepository repo;
     private final MongoTemplate template;
 
+    private final AuthenticatedUserProvider authenticatedUserProvider;
+
     @Inject
-    public ProfilService(UserRepository userRepository, MongoTemplate mongoTemplate) {
+    public ProfilService(UserRepository userRepository, MongoTemplate mongoTemplate, AuthenticatedUserProvider authenticatedUserProvider) {
         this.repo = userRepository;
         this.template = mongoTemplate;
+        this.authenticatedUserProvider= authenticatedUserProvider;
+    }
+
+    public User getCurrent() {
+        return this.authenticatedUserProvider.getCurrent();
     }
 
     public Optional<User> find(String userId) {

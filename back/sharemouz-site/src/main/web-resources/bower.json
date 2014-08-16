@@ -15,7 +15,8 @@
     "angular-touch": "1.2.16",
     "angular-route": "1.2.16",
     "angular-ui-utils": "~0.1",
-    "angular-ui-router": "~0.2.10"
+    "angular-ui-router": "~0.2.10",
+    "angular-bootstrap": "~0.11.0"
   },
   "devDependencies": {}
 }

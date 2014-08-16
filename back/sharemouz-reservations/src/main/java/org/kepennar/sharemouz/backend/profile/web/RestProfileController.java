@@ -1,5 +1,6 @@
 package org.kepennar.sharemouz.backend.profile.web;
 
+import org.kepennar.sharemouz.backend.model.User;
 import org.kepennar.sharemouz.backend.profile.Hateoas.ProfilResourceAssembler;
 import org.kepennar.sharemouz.backend.profile.Hateoas.ProfileResource;
 import org.kepennar.sharemouz.backend.profile.services.ProfilService;
@@ -11,8 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 
-import static org.kepennar.sharemouz.backend.ApiUrls.ROOT_URL_PROFILES;
-import static org.kepennar.sharemouz.backend.ApiUrls.URL_PROFILES_PROFILE;
+import static org.kepennar.sharemouz.backend.ApiUrls.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -22,7 +22,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  * Created by kepennar on 10/08/14.
  */
 @RestController
-@RequestMapping(ROOT_URL_PROFILES)
+@RequestMapping(ROOT_URL_PROFILS)
 public class RestProfileController {
 
     private final ProfilService service;
@@ -33,6 +33,13 @@ public class RestProfileController {
         this.service = profilService;
         this.resourceAssembler= profilResourceAssembler;
     }
+
+    @RequestMapping(method = GET, value= URL_PROFILES_CURRENT)
+    public HttpEntity<ProfileResource> getCurrentProlfil() {
+        User currentUser = this.service.getCurrent();
+        return new ResponseEntity<ProfileResource>(resourceAssembler.toResource(currentUser), OK);
+    }
+
 
     @RequestMapping(method = GET, value = URL_PROFILES_PROFILE)
     public HttpEntity<ProfileResource> getProfile(@PathVariable("id") String id) {

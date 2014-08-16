@@ -7,7 +7,7 @@
  * # myService
  * Service in the sampleApp.
  */
-angular.module('sampleApp')
+angular.module('sharemouz')
   .service('myService', function myService() {
     // AngularJS will instantiate a singleton by calling "new" on this function
   });

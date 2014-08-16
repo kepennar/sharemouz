@@ -54,7 +54,7 @@ public class RestReservationController {
         return new ResponseEntity<>(OK);
     }
 
-    @RequestMapping(method = PUT, value= URL_RESERVATIONS_RESERVE)
+    @RequestMapping(method = POST, value= URL_RESERVATIONS_RESERVE)
     public HttpEntity<ReservationResource> reserve(
             @PathVariable("offerId") Offer offer,
             @RequestBody @Valid Reservation reservation, BindingResult bindingResult) {

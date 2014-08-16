@@ -50,8 +50,8 @@ public class RestOfferController {
     //GET offers page
     @RequestMapping(method = GET, params = {"page", "size"})
     public HttpEntity<PagedResources<OfferResource>> getOfferPaginated(Pageable pageable, PagedResourcesAssembler<Offer> pagedAssembler) {
-        Page<Offer> orders = service.find(pageable);
-        return new ResponseEntity<>(pagedAssembler.toResource(orders, assembler), OK);
+        Page<Offer> offers = service.find(pageable);
+        return new ResponseEntity<>(pagedAssembler.toResource(offers, assembler), OK);
     }
 
 
@@ -81,4 +81,12 @@ public class RestOfferController {
         return new ResponseEntity<>(assembler.toResource(service.create(offer)), OK);
     }
 
+    // GET: Offers for a profil
+    @RequestMapping(method = GET, value=ApiUrls.URL_PROFIL_OFFERS)
+    public HttpEntity<PagedResources<OfferResource>> getProfilOffers(@PathVariable("id") String profilId,
+        Pageable pageable,PagedResourcesAssembler<Offer> pagedAssembler) {
+
+        Page<Offer> offers = service.getOffersForProfil(profilId, pageable);
+        return new ResponseEntity<>(pagedAssembler.toResource(offers, assembler), OK);
+    }
 }

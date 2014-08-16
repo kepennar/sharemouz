@@ -8,26 +8,34 @@
  *
  * Main module of the application.
  */
-angular
+var app= angular
   .module('sharemouz', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
-  ])
-  .config(function ($routeProvider) {
+    'ngTouch',
+    'ui.router',
+    'ui.bootstrap'
+  ]);
+
+app.config(function ($locationProvider, $routeProvider, $stateProvider) {
+    $locationProvider.html5Mode(true);
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
+      .otherwise({ redirectTo: '/site'});
+
+
+    $stateProvider
+      .state('home', {
+        url: '/site',
+        views: {
+          'profilView': { templateUrl: 'views/home/profil.html', controller: 'HomeProfilCtrl'}
+        }
       });
+  });
+  app.run(function run($http) {
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var token = $("meta[name='_csrf']").attr("content");
+    $http.defaults.headers.post[header] = token;
   });

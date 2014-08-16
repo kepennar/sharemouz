@@ -19,6 +19,7 @@ public class User extends AbstractDocument {
     private List<Role> roles;
 
     public User() { }
+    public User(String id) { this.setId(id);}
 
     public User(String email, String firstname, String lastname, String username) {
         this.email = email;

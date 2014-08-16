@@ -77,12 +77,14 @@ sourceSets {
     }
 }
 
+
 task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
     source = sourceSets.main.java
     classpath = configurations.compile + configurations.querydslapt
     options.compilerArgs = [
             "-proc:only",
-            "-processor", "org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor"
+            "-processor", "org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor",
+            "-Aquerydsl.entityAccessors=true"
     ]
     destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
 }

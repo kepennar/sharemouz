@@ -4,6 +4,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 // endbower
 @import "mixins/css3";
+@import "mixins/ng-animate";
 
 .browsehappy {
     margin: 0.2em 0;
@@ -18,6 +19,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 /*
  * Globals
  */
+
 $background-color:            #fff !default;
 $txt-color:                   #555 !default;
 
@@ -38,6 +40,9 @@ $box-shadow-color:            rgba(0,0,0,.5);
 $post-hover-background-color: #ECFFEA;
 
 $slide-panel-width:			75%;
+
+$header-bck-color:            #86BEA1 !default;
+
 
 body {
   color: $txt-color;
@@ -230,4 +235,9 @@ h6, .h6 {
 }
 .shm-footer p:last-child {
   margin-bottom: 0;
+}
+
+.modal-header {
+  background-color: $header-bck-color;
+  color: $txt-color;
 }
